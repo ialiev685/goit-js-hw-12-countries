@@ -2,6 +2,7 @@ import fetchCounties from "./js/fetchCountries.js";
 import refs from "./js/getRefs.js";
 import { templateList, templateOneCountry } from "./js/template.js";
 
+var debounce = require("lodash.debounce");
 import "@pnotify/core/dist/BrightTheme.css";
 import "@pnotify/core/dist/Material.css";
 import { alert, defaultModules } from "@pnotify/core/dist/PNotify.js";
@@ -9,7 +10,7 @@ import * as PNotifyMobile from "@pnotify/mobile/dist/PNotifyMobile.js";
 
 defaultModules.set(PNotifyMobile, {});
 
-refs.inputEl.addEventListener("input", _.debounce(onInputAdd, 500));
+refs.inputEl.addEventListener("input", debounce(onInputAdd, 500));
 
 function onInputAdd(event) {
   const queryName = event.target.value;
@@ -45,25 +46,3 @@ function showMessage(msg) {
     delay: 2000,
   });
 }
-
-// function checkCountCountries(data) {
-//   if (data.length === 1) {
-//     createDescriptionOneCountry(data);
-//   } else if (data.length >= 2 || data.length <= 10) {
-//     createList(data);
-//   }
-// }
-
-// function createList(listCountries) {
-//   const markup = templateList(listCountries);
-//   renderMarkup(markup);
-// }
-
-// function createDescriptionOneCountry([descOneCountry]) {
-//   const markup = templateOneCountry(descOneCountry);
-//   renderMarkup(markup);
-// }
-
-// function renderMarkup(markup) {
-//   refs.divContentEl.innerHTML = markup;
-// }
