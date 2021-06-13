@@ -13,10 +13,9 @@ defaultModules.set(PNotifyMobile, {});
 refs.inputEl.addEventListener("input", debounce(onInputAdd, 500));
 
 function onInputAdd(event) {
-  const queryName = event.target.value;
-
-  if (queryName === "" || queryName === " ") {
-    clearMarkup();
+  const queryName = event.target.value.trim();
+  if (queryName === "") {
+    clearMarkupAndRemoveStartSpace();
     return;
   }
   fetchCounties(queryName).then(checkCountCountries).catch(showMessage);
@@ -46,16 +45,16 @@ function renderMarkup(data, callbackTamplate) {
 }
 
 function showMessage(msg) {
-  const ignoreError = "Unexpected end of JSON input";
+  // const ignoreError = "Unexpected end of JSON input";
 
-  if (msg.message === ignoreError) return;
+  // if (msg.message === ignoreError) return;
   alert({
     text: msg,
     delay: 2000,
   });
 }
 
-function clearMarkup() {
+function clearMarkupAndRemoveStartSpace() {
   refs.divContentEl.innerHTML = "";
   refs.inputEl.value = "";
 }
