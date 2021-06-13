@@ -14,6 +14,11 @@ refs.inputEl.addEventListener("input", debounce(onInputAdd, 500));
 
 function onInputAdd(event) {
   const queryName = event.target.value;
+
+  if (queryName === "" || queryName === " ") {
+    clearMarkup();
+    return;
+  }
   fetchCounties(queryName).then(checkCountCountries).catch(showMessage);
 }
 
@@ -41,8 +46,16 @@ function renderMarkup(data, callbackTamplate) {
 }
 
 function showMessage(msg) {
+  const ignoreError = "Unexpected end of JSON input";
+
+  if (msg.message === ignoreError) return;
   alert({
     text: msg,
     delay: 2000,
   });
+}
+
+function clearMarkup() {
+  refs.divContentEl.innerHTML = "";
+  refs.inputEl.value = "";
 }
